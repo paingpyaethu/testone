@@ -15,24 +15,26 @@ import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
 if (!publishableKey) {
-  throw new Error('Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env')
+	throw new Error(
+		'Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env'
+	);
 }
 // Cache the Clerk JWT
 const tokenCache = {
-  async getToken(key: string) {
-    try {
-      return SecureStore.getItemAsync(key);
-    } catch (err) {
-      return null;
-    }
-  },
-  async saveToken(key: string, value: string) {
-    try {
-      return SecureStore.setItemAsync(key, value);
-    } catch (err) {
-      return;
-    }
-  },
+	async getToken(key: string) {
+		try {
+			return SecureStore.getItemAsync(key);
+		} catch (err) {
+			return null;
+		}
+	},
+	async saveToken(key: string, value: string) {
+		try {
+			return SecureStore.setItemAsync(key, value);
+		} catch (err) {
+			return;
+		}
+	},
 };
 
 export {
@@ -49,8 +51,8 @@ const InitialLayout = () => {
 		...FontAwesome.font,
 	});
 	const router = useRouter();
-  const { isLoaded, isSignedIn } = useAuth();
-  const segments = useSegments();
+	const { isLoaded, isSignedIn } = useAuth();
+	const segments = useSegments();
 
 	// Expo Router uses Error Boundaries to catch errors in the navigation tree.
 	useEffect(() => {
@@ -63,18 +65,18 @@ const InitialLayout = () => {
 		}
 	}, [loaded]);
 
-  useEffect(() => {
-    console.log('isSignedIn', isSignedIn)
-    // if (!isLoaded) return;
+	useEffect(() => {
+		console.log('isSignedIn', isSignedIn);
+		if (!isLoaded) return;
 
-    // const inAuthGroup = segments[0] === '(authenticated)';
+		const inAuthGroup = segments[0] === '(authenticated)';
 
-    // if (isSignedIn && !inAuthGroup) {
-    //   router.replace('/(authenticated)/(tabs)/home');
-    // } else if (!isSignedIn) {
-    //   router.replace('/');
-    // }
-  }, [isSignedIn]);
+		if (isSignedIn && !inAuthGroup) {
+			router.replace('(authenticated)/(tabs)/home');
+		} else if (!isSignedIn) {
+			router.replace('/');
+		}
+	}, [isSignedIn]);
 
 	if (!loaded) {
 		return null;
@@ -97,7 +99,7 @@ const InitialLayout = () => {
 					),
 				}}
 			/>
-      <Stack.Screen
+			<Stack.Screen
 				name='login'
 				options={{
 					title: '',
@@ -111,6 +113,10 @@ const InitialLayout = () => {
 					),
 				}}
 			/>
+			<Stack.Screen
+				name='(authenticated)/(tabs)'
+				options={{ headerShown: false }}
+			/>
 		</Stack>
 	);
 };
@@ -118,15 +124,15 @@ const InitialLayout = () => {
 const RootLayoutNav = () => {
 	return (
 		<ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-      {/* <QueryClientProvider client={queryClient}> */}
-        {/* <UserInactivityProvider> */}
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <StatusBar style="light" />
-            <InitialLayout />
-          </GestureHandlerRootView>
-        {/* </UserInactivityProvider> */}
-      {/* </QueryClientProvider> */}
-    </ClerkProvider>
+			{/* <QueryClientProvider client={queryClient}> */}
+			{/* <UserInactivityProvider> */}
+			<GestureHandlerRootView style={{ flex: 1 }}>
+				<StatusBar style='light' />
+				<InitialLayout />
+			</GestureHandlerRootView>
+			{/* </UserInactivityProvider> */}
+			{/* </QueryClientProvider> */}
+		</ClerkProvider>
 	);
 };
 
