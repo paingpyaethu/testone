@@ -4,7 +4,7 @@ import React from 'react'
 const TowPage = () => {
   return (
     <View>
-      <Text>TowPage</Text>
+      <Text>TowPagesss</Text>
     </View>
   )
 }
