@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const HelpScreen = () => {
+const SecondModal = () => {
   return (
     <View>
-      <Text>HelpScreen</Text>
+      <Text>SecondModal</Text>
     </View>
   )
 }
 
-export default HelpScreen
+export default SecondModal

@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const Page = () => {
+const TowPage = () => {
   return (
     <View>
-      <Text>Page</Text>
+      <Text>TowPage</Text>
     </View>
   )
 }
 
-export default Page
+export default TowPage
